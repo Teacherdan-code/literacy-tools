@@ -1,4 +1,4 @@
-const CACHE='literacy-tools-v2';
+const CACHE='literacy-tools-v3';
 const ASSETS=['./','index.html','styles.css','app.js','expanded-practice.js','fullscreen-stage.js','pwa.js','manifest.webmanifest','icon.svg'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
