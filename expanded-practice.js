@@ -82,26 +82,43 @@
     const controls=$(anchorSelector); if(!controls) return;
     const mode=controls.querySelector(`#${prefix}Mode`); if(!mode) return;
     const wrap=document.createElement('div'); wrap.className='browse-controls';
-    wrap.innerHTML=`<label>Choose by<select id="${prefix}Browse"><option value="skill">Skill / Set</option><option value="grade">Grade Level</option></select></label><div id="${prefix}GradeOptions" class="grade-options hidden"><label>Grade<select id="${prefix}Grade"><option value="K">K</option><option value="1">1</option><option value="2">2</option></select></label><label>Time of Year<select id="${prefix}Point"><option value="boy">Beginning of Year</option><option value="eoy">End of Year</option></select></label></div>`;
+    wrap.innerHTML=`<label>Choose by<select id="${prefix}Browse"><option value="skill">Skill / Set</option><option value="grade">Grade Level</option><option value="mix">Mix Grades</option></select></label><div id="${prefix}GradeOptions" class="grade-options hidden"><label id="${prefix}SingleGradeLabel">Grade<select id="${prefix}Grade"><option value="K">K</option><option value="1">1</option><option value="2">2</option></select></label><label id="${prefix}MixGradeLabel" class="hidden">Grades<select id="${prefix}Mix"><option value="K,1">K + 1</option><option value="1,2">1 + 2</option><option value="K,2">K + 2</option><option value="K,1,2">K + 1 + 2</option></select></label><label>Time of Year<select id="${prefix}Point"><option value="boy">Beginning of Year</option><option value="eoy">End of Year</option></select></label></div>`;
     mode.parentElement.insertAdjacentElement('afterend',wrap);
   }
   insertBrowseControls('wf','#wordFlash .controls');
   insertBrowseControls('hf','#hfw .controls');
   const wfPatternLabel=$('#wfPattern')?.closest('label');
   const hfSetLabel=$('#hfSet')?.closest('label');
-  function syncBrowse(prefix,label){const grade=$(`#${prefix}Browse`)?.value==='grade';$(`#${prefix}GradeOptions`)?.classList.toggle('hidden',!grade);label?.classList.toggle('hidden',grade);}
+  function syncBrowse(prefix,label){
+    const browse=$(`#${prefix}Browse`)?.value;
+    const gradeMode=browse==='grade' || browse==='mix';
+    $(`#${prefix}GradeOptions`)?.classList.toggle('hidden',!gradeMode);
+    $(`#${prefix}SingleGradeLabel`)?.classList.toggle('hidden',browse!=='grade');
+    $(`#${prefix}MixGradeLabel`)?.classList.toggle('hidden',browse!=='mix');
+    label?.classList.toggle('hidden',gradeMode);
+  }
   $('#wfBrowse')?.addEventListener('change',()=>syncBrowse('wf',wfPatternLabel));
   $('#hfBrowse')?.addEventListener('change',()=>syncBrowse('hf',hfSetLabel));
 
+  function selectedGrades(prefix){
+    if($(`#${prefix}Browse`)?.value==='mix') return ($(`#${prefix}Mix`)?.value||'K,1').split(',');
+    return [$(`#${prefix}Grade`)?.value||'K'];
+  }
   function currentWFBank(){
-    if($('#wfBrowse')?.value==='grade'){
-      const keys=gradeSkills[`${$('#wfGrade').value}|${$('#wfPoint').value}`]||[];
+    const browse=$('#wfBrowse')?.value;
+    if(browse==='grade' || browse==='mix'){
+      const point=$('#wfPoint').value;
+      const keys=selectedGrades('wf').flatMap(g=>gradeSkills[`${g}|${point}`]||[]);
       return unique(keys.flatMap(k=>skillBanks[k]||[]));
     }
     return skillBanks[$('#wfPattern').value]||[];
   }
   function currentHFBank(){
-    if($('#hfBrowse')?.value==='grade') return hfwGrade[`${$('#hfGrade').value}|${$('#hfPoint').value}`]||[];
+    const browse=$('#hfBrowse')?.value;
+    if(browse==='grade' || browse==='mix'){
+      const point=$('#hfPoint').value;
+      return unique(selectedGrades('hf').flatMap(g=>hfwGrade[`${g}|${point}`]||[]));
+    }
     const key=$('#hfSet').value==='tricky'?'irregular':$('#hfSet').value;
     if(key==='mixed') return unique([...hfwBase.beginning,...hfwBase.developing,...hfwBase.irregular]);
     return hfwBase[key]||[];
