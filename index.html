@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Literacy Tools</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <h1>Literacy Tools</h1>
+      <p>Quick routines for decoding, word recognition, and morphology.</p>
+    </div>
+    <button id="fullscreenBtn" class="secondary">Full Screen</button>
+  </header>
+
+  <main>
+    <section id="home" class="view active">
+      <div class="tool-grid">
+        <button class="tool-card" data-open="wordFlash">
+          <span class="eyebrow">Decoding</span>
+          <h2>Word Flash</h2>
+          <p>Practice phonics patterns with teacher-controlled or automatic word cycling.</p>
+        </button>
+        <button class="tool-card" data-open="hfw">
+          <span class="eyebrow">Automaticity</span>
+          <h2>High-Frequency Words</h2>
+          <p>Flash common words and optionally reveal a sound-spelling map.</p>
+        </button>
+        <button class="tool-card" data-open="morphology">
+          <span class="eyebrow">Word Analysis</span>
+          <h2>Morphology</h2>
+          <p>SPOT → SPLIT → READ → BUILD → CHECK with guided and automatic routines.</p>
+        </button>
+      </div>
+    </section>
+
+    <section id="wordFlash" class="view tool-view">
+      <button class="back secondary">← Tools</button>
+      <div class="tool-layout">
+        <aside class="controls">
+          <h2>Word Flash</h2>
+          <label>Mode<select id="wfMode"><option value="guided">Teacher-Controlled</option><option value="auto">Auto Cycle</option></select></label>
+          <label>Pattern<select id="wfPattern"></select></label>
+          <label>Words<select id="wfCount"><option>5</option><option selected>10</option><option>20</option></select></label>
+          <div id="wfAutoOptions" class="conditional hidden">
+            <label>Word time<select id="wfWordTime"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="3000">3 seconds</option><option value="5000">5 seconds</option></select></label>
+            <label>Blank time<select id="wfBlankTime"><option value="500">0.5 second</option><option value="1000" selected>1 second</option><option value="2000">2 seconds</option><option value="3000">3 seconds</option></select></label>
+          </div>
+          <button id="wfStart" class="primary">Start Routine</button>
+        </aside>
+        <section class="stage-wrap"><div class="stage"><div id="wfWord" class="display-word">Ready?</div><div id="wfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="wfAction" class="primary hidden"></button><button id="wfPause" class="secondary hidden">Pause</button><button id="wfRestart" class="secondary hidden">Restart</button></div><div id="wfCounter" class="counter"></div></section>
+      </div>
+    </section>
+
+    <section id="hfw" class="view tool-view">
+      <button class="back secondary">← Tools</button>
+      <div class="tool-layout">
+        <aside class="controls">
+          <h2>High-Frequency Words</h2>
+          <label>Mode<select id="hfMode"><option value="guided">Teacher-Controlled</option><option value="auto">Auto Cycle</option></select></label>
+          <label>Word Set<select id="hfSet"><option value="beginning">Beginning Words</option><option value="developing">Developing Words</option><option value="tricky">Words with Tricky Spellings</option><option value="mixed">Mixed Practice</option></select></label>
+          <label>Words<select id="hfCount"><option>5</option><option selected>10</option><option>20</option></select></label>
+          <label class="check"><input id="hfMapping" type="checkbox" checked /> Show sound mapping on reveal</label>
+          <div id="hfAutoOptions" class="conditional hidden">
+            <label>Word time<select id="hfWordTime"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="3000">3 seconds</option><option value="5000">5 seconds</option></select></label>
+            <label>Blank time<select id="hfBlankTime"><option value="500">0.5 second</option><option value="1000" selected>1 second</option><option value="2000">2 seconds</option></select></label>
+          </div>
+          <button id="hfStart" class="primary">Start Routine</button>
+        </aside>
+        <section class="stage-wrap"><div class="stage"><div id="hfWord" class="display-word">Ready?</div><div id="hfMap" class="sound-map hidden"></div><div id="hfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="hfAction" class="primary hidden"></button><button id="hfPause" class="secondary hidden">Pause</button><button id="hfRestart" class="secondary hidden">Restart</button></div><div id="hfCounter" class="counter"></div></section>
+      </div>
+    </section>
+
+    <section id="morphology" class="view tool-view">
+      <button class="back secondary">← Tools</button>
+      <div class="tool-layout">
+        <aside class="controls">
+          <h2>Morphology</h2>
+          <p class="routine-line">SPOT → SPLIT → READ → BUILD → CHECK</p>
+          <label>Mode<select id="moMode"><option value="guided">Guided Routine</option><option value="cycle">Word Cycle</option></select></label>
+          <label>Skill<select id="moSkill"></select></label>
+          <label>Words<select id="moCount"><option>5</option><option selected>10</option><option>20</option></select></label>
+          <div id="moCycleOptions" class="conditional hidden">
+            <label>Word time<select id="moWordTime"><option value="1500">1.5 seconds</option><option value="2000" selected>2 seconds</option><option value="3000">3 seconds</option><option value="5000">5 seconds</option></select></label>
+            <label>Think time<select id="moThinkTime"><option value="1000">1 second</option><option value="2000" selected>2 seconds</option><option value="3000">3 seconds</option><option value="5000">5 seconds</option></select></label>
+            <label>Reveal / discuss time<select id="moRevealTime"><option value="2000">2 seconds</option><option value="3000">3 seconds</option><option value="5000" selected>5 seconds</option><option value="10000">10 seconds</option><option value="teacher">Teacher-controlled</option></select></label>
+          </div>
+          <button id="moStart" class="primary">Start Routine</button>
+        </aside>
+        <section class="stage-wrap">
+          <div id="moSteps" class="steps"><span>SPOT</span><span>SPLIT</span><span>READ</span><span>BUILD</span><span>CHECK</span></div>
+          <div class="stage morphology-stage"><div id="moWord" class="display-word">Ready?</div><div id="moVisual" class="morph-visual"></div><div id="moPrompt" class="prompt"></div></div>
+          <div class="stage-actions"><button id="moAction" class="primary hidden"></button><button id="moNext" class="primary hidden">Next Word</button><button id="moPause" class="secondary hidden">Pause</button><button id="moRestart" class="secondary hidden">Restart</button></div><div id="moCounter" class="counter"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
