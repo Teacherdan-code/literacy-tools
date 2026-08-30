@@ -12,7 +12,7 @@
       <h1>Literacy Tools</h1>
       <p>Quick routines for decoding, word recognition, and morphology.</p>
     </div>
-    <button id="fullscreenBtn" class="secondary">Full Screen</button>
+    <button id="fullscreenBtn" class="secondary hidden" aria-hidden="true" tabindex="-1">Full Screen</button>
   </header>
 
   <main>
@@ -50,7 +50,7 @@
           </div>
           <button id="wfStart" class="primary">Start Routine</button>
         </aside>
-        <section class="stage-wrap"><div class="stage"><div id="wfWord" class="display-word">Ready?</div><div id="wfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="wfAction" class="primary hidden"></button><button id="wfPause" class="secondary hidden">Pause</button><button id="wfRestart" class="secondary hidden">Restart</button></div><div id="wfCounter" class="counter"></div></section>
+        <section class="stage-wrap"><button type="button" class="stage-fullscreen secondary">Full Screen</button><div class="stage"><div id="wfWord" class="display-word">Ready?</div><div id="wfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="wfAction" class="primary hidden"></button><button id="wfPause" class="secondary hidden">Pause</button><button id="wfRestart" class="secondary hidden">Restart</button></div><div id="wfCounter" class="counter"></div></section>
       </div>
     </section>
 
@@ -69,7 +69,7 @@
           </div>
           <button id="hfStart" class="primary">Start Routine</button>
         </aside>
-        <section class="stage-wrap"><div class="stage"><div id="hfWord" class="display-word">Ready?</div><div id="hfMap" class="sound-map hidden"></div><div id="hfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="hfAction" class="primary hidden"></button><button id="hfPause" class="secondary hidden">Pause</button><button id="hfRestart" class="secondary hidden">Restart</button></div><div id="hfCounter" class="counter"></div></section>
+        <section class="stage-wrap"><button type="button" class="stage-fullscreen secondary">Full Screen</button><div class="stage"><div id="hfWord" class="display-word">Ready?</div><div id="hfMap" class="sound-map hidden"></div><div id="hfPrompt" class="prompt"></div></div><div class="stage-actions"><button id="hfAction" class="primary hidden"></button><button id="hfPause" class="secondary hidden">Pause</button><button id="hfRestart" class="secondary hidden">Restart</button></div><div id="hfCounter" class="counter"></div></section>
       </div>
     </section>
 
@@ -90,6 +90,7 @@
           <button id="moStart" class="primary">Start Routine</button>
         </aside>
         <section class="stage-wrap">
+          <button type="button" class="stage-fullscreen secondary">Full Screen</button>
           <div id="moSteps" class="steps"><span>SPOT</span><span>SPLIT</span><span>READ</span><span>BUILD</span><span>CHECK</span></div>
           <div class="stage morphology-stage"><div id="moWord" class="display-word">Ready?</div><div id="moVisual" class="morph-visual"></div><div id="moPrompt" class="prompt"></div></div>
           <div class="stage-actions"><button id="moAction" class="primary hidden"></button><button id="moNext" class="primary hidden">Next Word</button><button id="moPause" class="secondary hidden">Pause</button><button id="moRestart" class="secondary hidden">Restart</button></div><div id="moCounter" class="counter"></div>
@@ -99,5 +100,6 @@
   </main>
 
   <script src="app.js"></script>
+  <script src="fullscreen-stage.js"></script>
 </body>
 </html>
